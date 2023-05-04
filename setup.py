@@ -1,6 +1,7 @@
 """
 spreadsheet-editor setup
 """
+
 import json
 import os
 
@@ -35,8 +36,8 @@ package_data_spec = {
 labext_name = "spreadsheet-editor"
 
 data_files_spec = [
-    ("share/jupyter/labextensions/%s" % labext_name, lab_path, "**"),
-    ("share/jupyter/labextensions/%s" % labext_name, HERE, "install.json"),
+    (f"share/jupyter/labextensions/{labext_name}", lab_path, "**"),
+    (f"share/jupyter/labextensions/{labext_name}", HERE, "install.json"),
 ]
 
 cmdclass = create_cmdclass("jsdeps",
@@ -49,8 +50,7 @@ js_command = combine_commands(
     ensure_targets(jstargets),
 )
 
-is_repo = os.path.exists(os.path.join(HERE, ".git"))
-if is_repo:
+if is_repo := os.path.exists(os.path.join(HERE, ".git")):
     cmdclass["jsdeps"] = js_command
 else:
     cmdclass["jsdeps"] = skip_if_exists(jstargets, js_command)
